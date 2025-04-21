@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Te Amo, Ágatha!</title>
+  <style>
+    body {
+      background-color: #1e1e2f;
+      color: #f8f8f2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      overflow-x: hidden;
+    }h1 {
+  color: #ff79c6;
+  font-size: 2.5em;
+  margin-top: 20px;
+}
+
+#contador {
+  font-size: 1.3em;
+  margin: 20px 0;
+  color: #f1fa8c;
+}
+
+.cora {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: red;
+  transform: rotate(45deg);
+  animation: subir 5s infinite ease-in;
+  opacity: 0.6;
+}
+
+.cora::before, .cora::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: red;
+  border-radius: 50%;
+}
+
+.cora::before {
+  top: -10px;
+  left: 0;
+}
+
+.cora::after {
+  left: -10px;
+  top: 0;
+}
+
+@keyframes subir {
+  0% {
+    transform: translateY(0) rotate(45deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(45deg);
+    opacity: 0;
+  }
+}
+  #botaoMusica {
+  background-color: #ff79c6;
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  padding: 12px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s ease;
+  margin: 20px auto;
+  display: block;
+}
+
+#botaoMusica:hover {
+  background-color: #ff92d0;
+}
+
+    .carrossel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    gap: 10px;
+  }
+
+  .carrossel-img {
+    width: 90%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .botao-carrossel {
+    background-color: #ff79c6;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    padding: 8px 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .botao-carrossel:hover {
+    background-color: #ff92d0;
+  }
+</style>
+</head>
+<body>
+  <h1>Te amo, Ágatha!</h1>
+  <div id="contador"></div> <div class="carrossel-container">
+  <button class="botao-carrossel" onclick="mudarImagem(-1)"><</button>
+
+  <img id="imagemCarrossel" src="img1.jpg" alt="Foto 1" class="carrossel-img">
+
+  <button class="botao-carrossel" onclick="mudarImagem(1)">></button>
+</div>
+<button id="botaoMusica">❤️ Nossa Música</button>
+  <audio id="musica" src="best-part.mp3" loop></audio>
+
+<script>
+  const musica = document.getElementById("musica");
+  const botao = document.getElementById("botaoMusica");
+
+  botao.addEventListener("click", () => {
+    if (musica.paused) {
+      musica.play();
+      botao.textContent = "Pausar";
+    } else {
+      musica.pause();
+      botao.textContent = "❤️ Nossa Música";
+    }
+  });
+
+  // Para a música ao sair da página
+  window.addEventListener("beforeunload", () => {
+    musica.pause();
+    musica.currentTime = 0;
+  });
+</script>
+  </div>  <script>
+    const inicio = new Date("2023-09-02T00:00:00");
+    setInterval(() => {
+      const agora = new Date();
+      const diff = agora - inicio;
+
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diff / (1000 * 60)) % 60);
+      const segundos = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("contador").textContent =
+        `Estamos juntos há ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos!`;
+    }, 1000);
+
+    // corações animados
+    function criarCoracao() {
+      const cora = document.createElement("div");
+      cora.classList.add("cora");
+      cora.style.left = Math.random() * 100 + "vw";
+      document.body.appendChild(cora);
+      setTimeout(() => cora.remove(), 5000);
+    }
+    setInterval(criarCoracao, 800);
+  </script><script>
+  const imagens = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg", "img7.jpg"]; // seus arquivos de imagem
+  let indiceAtual = 0;
+  const img = document.getElementById("imagemCarrossel");
+
+  function mudarImagem(direcao) {
+    indiceAtual += direcao;
+    if (indiceAtual < 0) indiceAtual = imagens.length - 1;
+    if (indiceAtual >= imagens.length) indiceAtual = 0;
+
+    trocarImagem();
+  }
+
+  function trocarImagem() {
+    img.style.opacity = 0;
+    setTimeout(() => {
+      img.src = imagens[indiceAtual];
+      img.alt = "Foto " + (indiceAtual + 1);
+      img.style.opacity = 1;
+    }, 300);
+  }
+
+  // Troca automática a cada 5 segundos
+  setInterval(() => {
+    mudarImagem(1);
+  }, 10000);
+</script></body>
+</html>
